@@ -1,3 +1,6 @@
+# Copyright (C) 2021 Eduard Drusa
+# SPDX-License-Identifier: MPL-2.0
+
 if (NOT EXISTS CACHE{GCC_EXE})
 	find_program(GCC_EXE arm-none-eabi-gcc
 		PATHS

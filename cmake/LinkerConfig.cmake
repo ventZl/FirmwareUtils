@@ -1,3 +1,5 @@
+# Copyright (C) 2021 Eduard Drusa
+# SPDX-License-Identifier: MPL-2.0
 
 if (NOT DEVICE)
 	message(FATAL_ERROR "No target device selected! Please define variable DEVICE to contain *full* name of your MCU!")

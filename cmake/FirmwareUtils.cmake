@@ -1,3 +1,6 @@
+# Copyright (C) 2021 Eduard Drusa
+# SPDX-License-Identifier: MPL-2.0
+
 function(add_firmware NAME)
 	message(STATUS "Adding subproject ${NAME}")
 	cmake_parse_arguments(AF "OPTIONAL" "ARCH;TARGET;TOOLCHAIN;VARIANT" "" "${ARGN}")

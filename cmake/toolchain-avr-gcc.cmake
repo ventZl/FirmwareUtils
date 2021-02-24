@@ -1,3 +1,6 @@
+# Copyright (C) 2021 Eduard Drusa
+# SPDX-License-Identifier: MPL-2.0
+
 SET(CMAKE_FIND_ROOT_PATH  /opt/avr /opt/avr/avr)
 
 find_program(AVR_CC avr-gcc)
