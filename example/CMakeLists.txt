@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.3)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake")
 
 include(FirmwareUtils)
 
@@ -10,6 +10,7 @@ file(WRITE ${CMAKE_BINARY_DIR}/.gitignore "*")
 project(HelloWorld LANGUAGES NONE)
 
 if (NOT SUBPROJECT)
+	# Firmware, will be built for Cortex-M0
 	add_firmware(hello_cross
 		ARCH arm
 		TARGET cortex-m0plus
@@ -17,6 +18,7 @@ if (NOT SUBPROJECT)
 		VARIANT cross
 		)
 
+	# Native hosted tool, will be built using whatever toolchain available
 	add_native_code(hello_native
 		VARIANT native
 		)

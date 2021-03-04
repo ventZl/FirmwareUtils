@@ -1,4 +1,5 @@
 set(DEVICE "STM32L073RZT6")
+
 include(LinkerConfig)
 
 include_directories(${CMAKE_SOURCE_DIR}/libopencm3/include)
