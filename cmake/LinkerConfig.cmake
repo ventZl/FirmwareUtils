@@ -99,6 +99,5 @@ set(LDSCRIPT ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
 execute_process(COMMAND ${CMAKE_C_COMPILER} ${ARCH_FLAGS} ${DEVICE_DEFS} -P -E ${CMAKE_SOURCE_DIR}/libopencm3/ld/linker.ld.S -o ${LDSCRIPT})
 message(DEBUG ${CMAKE_C_COMPILER} ${ARCH_FLAGS} ${DEVICE_DEFS} -P -E ${CMAKE_SOURCE_DIR}/libopencm3/ld/linker.ld.S -o ${LDSCRIPT})
 
-#add_link_options(-l${LIBOPENCM3})
 add_link_options(${ARCH_FLAGS} -T${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
 
