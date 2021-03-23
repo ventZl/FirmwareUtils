@@ -40,6 +40,13 @@ function(add_firmware NAME)
 		list(APPEND CMAKE_ARGS -DTESTING=1)
 	endif()
 
+	foreach(GLOBAL ${FIRMWARE_GLOBALS})
+		if (${${GLOBAL}})
+			message(STATUS "${GLOBAL} set, forwarding into subproject")
+			list(APPEND CMAKE_ARGS -D${GLOBAL}=${${GLOBAL}})
+		endif()
+	endforeach()
+
 
 	file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${NAME})
 
