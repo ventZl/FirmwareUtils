@@ -27,6 +27,8 @@ function(_genlink_obtain DEVICE PROPERTY OUTPUT)
 	endif()
 endfunction()
 
+set(TARGETGROUP stm32 sam gd32 lpc13xx lpc17xx lpc43xx lm3s lm4f msp432 efm32 sam vf6xx swm050 pac55xx)
+
 _genlink_obtain(${DEVICE} FAMILY DEVICE_FAMILY)
 _genlink_obtain(${DEVICE} SUBFAMILY DEVICE_SUBFAMILY)
 _genlink_obtain(${DEVICE} CPU DEVICE_CPU)
@@ -34,6 +36,21 @@ _genlink_obtain(${DEVICE} FPU DEVICE_FPU)
 _genlink_obtain(${DEVICE} CPPFLAGS DEVICE_CPPFLAGS)
 _genlink_obtain(${DEVICE} DEFS DEVICE_DEFS)
 
+# Build libopencm3 here. Otherwise library search process below will fail
+foreach (TGT ${TARGETGROUP})
+	string(REPLACE "${TGT}" "${TGT}/" TGTSPEC "${DEVICE_FAMILY}")
+	if (NOT ("${TGTSPEC}" STREQUAL "${DEVICE_FAMILY}"))
+		message("Target: ${TGTSPEC}")
+		get_filename_component(GCC_PATH ${CMAKE_C_COMPILER} DIRECTORY)
+		message("Toolchain path: ${GCC_PATH}")
+		set($ENV{PATH} $ENV{PATH} ${GCC_PATH})
+		execute_process(
+			COMMAND ${CMAKE_COMMAND} -E env TARGETS=${TGTSPEC} PATH=${GCC_PATH}:$ENV{PATH} make -j all
+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/libopencm3
+			)
+		break()
+	endif()
+endforeach()
 
 string(REPLACE " " ";" DEVICE_DEFS ${DEVICE_DEFS})
 
