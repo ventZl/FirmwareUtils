@@ -3,7 +3,7 @@
 
 function(add_firmware NAME)
 	message(STATUS "Adding subproject ${NAME}")
-	cmake_parse_arguments(AF "OPTIONAL" "ARCH;TARGET;TOOLCHAIN;VARIANT" "" "${ARGN}")
+	cmake_parse_arguments(AF "OPTIONAL" "ARCH;TARGET;HOST;TOOLCHAIN;VARIANT" "" "${ARGN}")
 	if ("${AF_ARCH}" STREQUAL "")
 		message(FATAL_ERROR "Architecture specification is mandatory for firmware declaration!")
 	endif()
@@ -16,7 +16,11 @@ function(add_firmware NAME)
 		set(AF_VARIANT ${NAME})
 	endif()
 
-	set(TOOLCHAIN_SPEC toolchain-${AF_ARCH}-${AF_TOOLCHAIN})
+	if ("${AF_HOST}" STREQUAL "")
+		set(TOOLCHAIN_SPEC toolchain-${AF_ARCH}-${AF_TOOLCHAIN})
+	else()
+		set(TOOLCHAIN_SPEC toolchain-${AF_ARCH}-${AF_HOST}-${AF_TOOLCHAIN})
+	endif()
 
 	find_file(TOOLCHAIN_FILE
 		NAMES ${TOOLCHAIN_SPEC}.cmake
