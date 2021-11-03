@@ -100,6 +100,13 @@ function(add_native_code NAME)
 		set(AF_VARIANT ${NAME})
 	endif()
 
+	foreach(GLOBAL ${FIRMWARE_GLOBALS})
+		if (${${GLOBAL}})
+			message(STATUS "${GLOBAL} set, forwarding into subproject")
+			list(APPEND CMAKE_ARGS -D${GLOBAL}=${${GLOBAL}})
+		endif()
+	endforeach()
+
 
 	execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DSUBPROJECT=${AF_VARIANT} ${CMAKE_SOURCE_DIR}
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${NAME}
