@@ -82,12 +82,13 @@ set(OPENCM3_LIBNAME
 
 foreach(CANDIDATE ${OPENCM3_LIBNAME})
 	if (EXISTS ${OPENCM3_LIBDIR}/lib${CANDIDATE}.a)
+		message(STATUS "Libopencm3 found: ${CANDIDATE}")
 		set(LIBOPENCM3 ${CANDIDATE})
 		break()
 	endif()
 endforeach()
 
-if (NOT OPENCM3_LIBNAME)
+if (NOT LIBOPENCM3)
 	message(FATAL_ERROR "Library variant for the selected device does not exist!")
 endif()
 
@@ -116,5 +117,5 @@ set(LDSCRIPT ${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
 execute_process(COMMAND ${CMAKE_C_COMPILER} ${ARCH_FLAGS} ${DEVICE_DEFS} -P -E ${CMAKE_SOURCE_DIR}/libopencm3/ld/linker.ld.S -o ${LDSCRIPT})
 message(DEBUG ${CMAKE_C_COMPILER} ${ARCH_FLAGS} ${DEVICE_DEFS} -P -E ${CMAKE_SOURCE_DIR}/libopencm3/ld/linker.ld.S -o ${LDSCRIPT})
 
-add_link_options(${ARCH_FLAGS} -T${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
+add_link_options(${ARCH_FLAGS})# -T${CMAKE_BINARY_DIR}/gen.${DEVICE}.ld)
 
